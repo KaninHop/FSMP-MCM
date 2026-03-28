@@ -1,7 +1,8 @@
 # setup_ci.ps1 - Prepare CI environment for FSMP-MCM build
 #
-# Base game scripts are provided as minimal stubs in Source/Scripts/Stubs/
-# (committed to the repo). Only external mod dependencies are downloaded here.
+# Base game, SKSE, and mod dependency scripts are provided as minimal stubs
+# in Source/Scripts/Stubs/ (committed to the repo).
+# Only the Caprica compiler and SkyUI SDK need to be downloaded.
 
 $ErrorActionPreference = "Stop"
 $rootDir = Get-Location
@@ -29,35 +30,19 @@ function Download-And-Extract {
     return $sourcePath
 }
 
-# ── 1. Download Tools ─────────────────────────────────────────────────────────
+# ── 1. Download Caprica compiler ──────────────────────────────────────────────
 
-# Caprica compiler
 $capricaPath = Download-And-Extract "https://github.com/KrisV-777/Caprica/releases/download/0.3.0a/Caprica.zip" "Caprica"
 Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Select-Object -First 1 | Copy-Item -Destination (Join-Path $toolDir "Caprica.exe")
 Write-Host "Caprica installed."
 
-# ── 2. Download Mod Dependencies ──────────────────────────────────────────────
-# Note: Base game and SKSE scripts are provided as stubs in Source/Scripts/Stubs/
+# ── 2. Download SkyUI SDK (MCM framework) ─────────────────────────────────────
 
-# SkyUI SDK
 $skyuiSdk = Download-And-Extract "https://github.com/schlangster/skyui/archive/refs/heads/master.zip" "SkyUISDK" "skyui-master/dist/Data/Scripts/Source"
 Copy-Item (Join-Path $skyuiSdk "*.psc") $depDir
 Write-Host "SkyUI SDK installed."
 
-# PapyrusUtil
-$papyrusUtil = Download-And-Extract "https://github.com/exoticretard/PapyrusUtil/archive/refs/heads/master.zip" "PapyrusUtil" "PapyrusUtil-master/Source/Scripts"
-Copy-Item (Join-Path $papyrusUtil "*.psc") $depDir
-Write-Host "PapyrusUtil installed."
-
-# JContainers
-$jcontainers = Download-And-Extract "https://github.com/silverlockteam/JContainers/archive/refs/heads/master.zip" "JContainers" "JContainers-master/scripts/source"
-Copy-Item (Join-Path $jcontainers "*.psc") $depDir
-Write-Host "JContainers installed."
-
-# ConsoleUtil
-$consoleUtil = Download-And-Extract "https://github.com/Ryan-S-S/ConsoleUtilSSE/archive/refs/heads/master.zip" "ConsoleUtil" "ConsoleUtilSSE-master/Scripts/Source"
-Copy-Item (Join-Path $consoleUtil "*.psc") $depDir
-Write-Host "ConsoleUtil installed."
+# ── Done ──────────────────────────────────────────────────────────────────────
 
 Write-Host ""
 Write-Host "CI dependency setup complete."
