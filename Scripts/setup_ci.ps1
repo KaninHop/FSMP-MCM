@@ -1,5 +1,9 @@
 # setup_ci.ps1 - Prepare CI environment for FSMP-MCM build
+#
+# Base game scripts are provided as minimal stubs in Source/Scripts/Stubs/
+# (committed to the repo). Only external mod dependencies are downloaded here.
 
+$ErrorActionPreference = "Stop"
 $rootDir = Get-Location
 $depDir = Join-Path $rootDir "ci_dependencies"
 $toolDir = Join-Path $rootDir "ci_tools"
@@ -13,11 +17,11 @@ function Download-And-Extract {
         [string]$Name,
         [string]$ExtractSubPath = ""
     )
-    Write-Host "Downloading $Name..."
+    Write-Host "Downloading $Name from $Url ..."
     $zipFile = Join-Path $env:TEMP "$Name.zip"
     $outDir = Join-Path $env:TEMP "$Name-extracted"
     
-    Invoke-WebRequest -Uri $Url -OutFile $zipFile
+    Invoke-WebRequest -Uri $Url -OutFile $zipFile -UseBasicParsing
     if (Test-Path $outDir) { Remove-Item -Recurse -Force $outDir }
     Expand-Archive -Path $zipFile -DestinationPath $outDir
     
@@ -25,55 +29,42 @@ function Download-And-Extract {
     return $sourcePath
 }
 
-# 1. Download Tools
-# Caprica
+# ── 1. Download Tools ─────────────────────────────────────────────────────────
+
+# Caprica compiler
 $capricaPath = Download-And-Extract "https://github.com/KrisV-777/Caprica/releases/download/0.3.0a/Caprica.zip" "Caprica"
-Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Copy-Item -Destination (Join-Path $toolDir "Caprica.exe")
+Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Select-Object -First 1 | Copy-Item -Destination (Join-Path $toolDir "Caprica.exe")
+Write-Host "Caprica installed."
 
-# Pyro
-$pyroPath = Download-And-Extract "https://github.com/fireundubh/pyro/releases/download/1656807840/pyro-master-1656807840.zip" "Pyro"
-Get-ChildItem -Path $pyroPath -Filter "pyro.exe" -Recurse | Copy-Item -Destination (Join-Path $toolDir "pyro.exe")
-
-# 2. Download Dependencies
-# Base Game Scripts (Stubs)
-$gameSdk = Download-And-Extract "https://github.com/Mr-S-E/Papyrus-SDK-Skyrim/archive/refs/heads/master.zip" "GameSDK" "Papyrus-SDK-Skyrim-master"
-Copy-Item -Recurse (Join-Path $gameSdk "*") $depDir
+# ── 2. Download Mod Dependencies ──────────────────────────────────────────────
 
 # SKSE Scripts
 $skseSdk = Download-And-Extract "https://github.com/ianpatt/skse64/archive/refs/heads/master.zip" "SKSESDK" "skse64-master/skse64/Scripts/Source"
-Copy-Item -Recurse (Join-Path $skseSdk "*.psc") $depDir
+Copy-Item (Join-Path $skseSdk "*.psc") $depDir
+Write-Host "SKSE scripts installed."
 
 # SkyUI SDK
 $skyuiSdk = Download-And-Extract "https://github.com/schlangster/skyui/archive/refs/heads/master.zip" "SkyUISDK" "skyui-master/dist/Data/Scripts/Source"
-Copy-Item -Recurse (Join-Path $skyuiSdk "*.psc") $depDir
+Copy-Item (Join-Path $skyuiSdk "*.psc") $depDir
+Write-Host "SkyUI SDK installed."
 
 # PapyrusUtil
 $papyrusUtil = Download-And-Extract "https://github.com/exoticretard/PapyrusUtil/archive/refs/heads/master.zip" "PapyrusUtil" "PapyrusUtil-master/Source/Scripts"
-Copy-Item -Recurse (Join-Path $papyrusUtil "*.psc") $depDir
+Copy-Item (Join-Path $papyrusUtil "*.psc") $depDir
+Write-Host "PapyrusUtil installed."
 
 # JContainers
 $jcontainers = Download-And-Extract "https://github.com/silverlockteam/JContainers/archive/refs/heads/master.zip" "JContainers" "JContainers-master/scripts/source"
-Copy-Item -Recurse (Join-Path $jcontainers "*.psc") $depDir
+Copy-Item (Join-Path $jcontainers "*.psc") $depDir
+Write-Host "JContainers installed."
 
 # ConsoleUtil
 $consoleUtil = Download-And-Extract "https://github.com/Ryan-S-S/ConsoleUtilSSE/archive/refs/heads/master.zip" "ConsoleUtil" "ConsoleUtilSSE-master/Scripts/Source"
-Copy-Item -Recurse (Join-Path $consoleUtil "*.psc") $depDir
+Copy-Item (Join-Path $consoleUtil "*.psc") $depDir
+Write-Host "ConsoleUtil installed."
 
-# 3. Create Flags File
-$flagsContent = @"
-[ExternalElement]
-0=Hidden
-1=Conditional
-2=Debug
-
-[Property]
-0=Hidden
-1=Conditional
-
-[Variable]
-0=Hidden
-1=Conditional
-"@
-$flagsContent | Out-File -FilePath (Join-Path $depDir "TESV_Papyrus_Flags.flg") -Encoding ascii
-
+Write-Host ""
 Write-Host "CI dependency setup complete."
+Write-Host "  Tools:        $toolDir"
+Write-Host "  Dependencies: $depDir"
+Write-Host "  Stubs:        Source/Scripts/Stubs/ (in repo)"

@@ -1,6 +1,7 @@
 <?xml version='1.0'?>
+<!-- CI-only project file. Uses relative paths to ci_dependencies and in-repo Stubs. -->
 <PapyrusProject xmlns="PapyrusProject.xsd" 
-    Flags="ci_dependencies/TESV_Papyrus_Flags.flg" 
+    Flags="Source/Scripts/Stubs/TESV_Papyrus_Flags.flg" 
     Game="sse"
     Anonymize="true" 
     Output="Scripts" 
@@ -14,12 +15,13 @@
     </Variables>
     <Imports>
         <Import>./Source/Scripts</Import>
+        <Import>./Source/Scripts/Stubs</Import>
         <Import>./ci_dependencies</Import>
     </Imports>
     <Folders>
         <Folder>./Source/Scripts</Folder>
     </Folders>
-    <!-- Distributable ZIP for Mod Managers -->
+    <!-- Distributable ZIP for Mod Managers (MO2, Vortex) -->
     <ZipFiles Output="Build">
         <ZipFile Name="@ModName" RootDir="." Compression="deflate">
             <Include>FSMPM - The FSMP MCM.esp</Include>
