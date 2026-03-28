@@ -1,0 +1,35 @@
+name: Build FSMP MCM
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Setup CI Dependencies
+        shell: powershell
+        run: ./scripts/setup_ci.ps1
+
+      - name: Build Mod with Pyro
+        shell: powershell
+        run: |
+          ./ci_tools/pyro.exe --project skyrimse_ci.ppj
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FSMP-MCM-Dist
+          path: Build/*.zip

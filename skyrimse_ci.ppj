@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<PapyrusProject xmlns="PapyrusProject.xsd" 
+    Flags="ci_dependencies/TESV_Papyrus_Flags.flg" 
+    Game="sse"
+    Anonymize="true" 
+    Output="Scripts" 
+    Optimize="false" 
+    Release="false" 
+    Zip="true"
+    Package="false"
+    Final="false">
+    <Variables>
+        <Variable Name="ModName" Value="FSMP MCM" />
+    </Variables>
+    <Imports>
+        <Import>./Source/Scripts</Import>
+        <Import>./ci_dependencies</Import>
+    </Imports>
+    <Folders>
+        <Folder>./Source/Scripts</Folder>
+    </Folders>
+    <!-- Distributable ZIP for Mod Managers -->
+    <ZipFiles Output="Build">
+        <ZipFile Name="@ModName" RootDir="." Compression="deflate">
+            <Include>FSMPM - The FSMP MCM.esp</Include>
+            <Match In="Scripts">*.pex</Match>
+            <Match In="SKSE\Plugins\hdtSkinnedMeshConfigs">configs.xml</Match>
+            <Match In="SKSE\Plugins\hdtSkinnedMeshConfigs\configsPresets">*.xml</Match>
+        </ZipFile>
+    </ZipFiles>
+</PapyrusProject>
