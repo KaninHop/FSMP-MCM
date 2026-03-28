@@ -27,12 +27,12 @@ function Download-And-Extract {
 
 # 1. Download Tools
 # Caprica
-$capricaPath = Download-And-Extract "https://github.com/Orvid/Caprica/releases/latest/download/Caprica.zip" "Caprica"
-Copy-Item (Join-Path $capricaPath "Caprica.exe") (Join-Path $toolDir "Caprica.exe")
+$capricaPath = Download-And-Extract "https://github.com/KrisV-777/Caprica/releases/download/0.3.0a/Caprica.zip" "Caprica"
+Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Copy-Item -Destination (Join-Path $toolDir "Caprica.exe")
 
 # Pyro
-$pyroPath = Download-And-Extract "https://github.com/fireundubh/pyro/releases/latest/download/pyro.zip" "Pyro"
-Copy-Item (Join-Path $pyroPath "pyro.exe") (Join-Path $toolDir "pyro.exe")
+$pyroPath = Download-And-Extract "https://github.com/fireundubh/pyro/releases/download/1656807840/pyro-master-1656807840.zip" "Pyro"
+Get-ChildItem -Path $pyroPath -Filter "pyro.exe" -Recurse | Copy-Item -Destination (Join-Path $toolDir "pyro.exe")
 
 # 2. Download Dependencies
 # Base Game Scripts (Stubs)
