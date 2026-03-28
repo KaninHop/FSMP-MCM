@@ -37,11 +37,7 @@ Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Select-Object 
 Write-Host "Caprica installed."
 
 # ── 2. Download Mod Dependencies ──────────────────────────────────────────────
-
-# SKSE Scripts
-$skseSdk = Download-And-Extract "https://github.com/ianpatt/skse64/archive/refs/heads/master.zip" "SKSESDK" "skse64-master/skse64/Scripts/Source"
-Copy-Item (Join-Path $skseSdk "*.psc") $depDir
-Write-Host "SKSE scripts installed."
+# Note: Base game and SKSE scripts are provided as stubs in Source/Scripts/Stubs/
 
 # SkyUI SDK
 $skyuiSdk = Download-And-Extract "https://github.com/schlangster/skyui/archive/refs/heads/master.zip" "SkyUISDK" "skyui-master/dist/Data/Scripts/Source"
