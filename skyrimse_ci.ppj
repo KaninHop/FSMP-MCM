@@ -15,8 +15,8 @@
     </Variables>
     <Imports>
         <Import>./Source/Scripts</Import>
+        <Import>./Source/Scripts/SkyUI_SDK</Import>
         <Import>./Source/Scripts/Stubs</Import>
-        <Import>./ci_dependencies</Import>
     </Imports>
     <Folders>
         <Folder>./Source/Scripts</Folder>

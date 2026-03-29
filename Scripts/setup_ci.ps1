@@ -1,15 +1,13 @@
 # setup_ci.ps1 - Prepare CI environment for FSMP-MCM build
 #
-# Base game, SKSE, and mod dependency scripts are provided as minimal stubs
-# in Source/Scripts/Stubs/ (committed to the repo).
-# Only the Caprica compiler and SkyUI SDK need to be downloaded.
+# All script dependencies (base game, SKSE, SkyUI SDK, mod libraries) are
+# provided in-repo under Source/Scripts/Stubs/ and Source/Scripts/SkyUI_SDK/.
+# Only the Caprica compiler needs to be downloaded.
 
 $ErrorActionPreference = "Stop"
 $rootDir = Get-Location
-$depDir = Join-Path $rootDir "ci_dependencies"
 $toolDir = Join-Path $rootDir "ci_tools"
 
-if (!(Test-Path $depDir)) { New-Item -ItemType Directory -Path $depDir }
 if (!(Test-Path $toolDir)) { New-Item -ItemType Directory -Path $toolDir }
 
 function Download-And-Extract {
@@ -30,22 +28,16 @@ function Download-And-Extract {
     return $sourcePath
 }
 
-# ── 1. Download Caprica compiler ──────────────────────────────────────────────
+# ── Download Caprica compiler ─────────────────────────────────────────────────
 
 $capricaPath = Download-And-Extract "https://github.com/KrisV-777/Caprica/releases/download/0.3.0a/Caprica.zip" "Caprica"
 Get-ChildItem -Path $capricaPath -Filter "Caprica.exe" -Recurse | Select-Object -First 1 | Copy-Item -Destination (Join-Path $toolDir "Caprica.exe")
 Write-Host "Caprica installed."
 
-# ── 2. Download SkyUI SDK (MCM framework) ─────────────────────────────────────
-
-$skyuiSdk = Download-And-Extract "https://github.com/schlangster/skyui/archive/refs/heads/master.zip" "SkyUISDK" "skyui-master/dist/Data/Scripts/Source"
-Copy-Item (Join-Path $skyuiSdk "*.psc") $depDir
-Write-Host "SkyUI SDK installed."
-
 # ── Done ──────────────────────────────────────────────────────────────────────
 
 Write-Host ""
-Write-Host "CI dependency setup complete."
-Write-Host "  Tools:        $toolDir"
-Write-Host "  Dependencies: $depDir"
-Write-Host "  Stubs:        Source/Scripts/Stubs/ (in repo)"
+Write-Host "CI setup complete."
+Write-Host "  Tools:     $toolDir"
+Write-Host "  Stubs:     Source/Scripts/Stubs/ (in repo)"
+Write-Host "  SkyUI SDK: Source/Scripts/SkyUI_SDK/ (in repo)"

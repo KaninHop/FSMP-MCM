@@ -25,6 +25,11 @@ Function UnregisterForTrackedStatsEvent() native
 Function UnregisterForUpdate() native
 Function UnregisterForUpdateGameTime() native
 
+; SKSE additions
+Function RegisterForModEvent(string eventName, string callbackName) native
+Function UnregisterForModEvent(string eventName) native
+Function SendModEvent(string eventName, string strArg = "", float numArg = 0.0) native
+
 Event OnAnimationEvent(ObjectReference akSource, string asEventName)
 EndEvent
 

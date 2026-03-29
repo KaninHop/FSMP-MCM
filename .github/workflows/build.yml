@@ -24,8 +24,8 @@ jobs:
           $flagsFile = Resolve-Path "Source/Scripts/Stubs/TESV_Papyrus_Flags.flg"
           $imports = @(
             (Resolve-Path "Source/Scripts"),
-            (Resolve-Path "Source/Scripts/Stubs"),
-            (Resolve-Path "ci_dependencies")
+            (Resolve-Path "Source/Scripts/SkyUI_SDK"),
+            (Resolve-Path "Source/Scripts/Stubs")
           ) -join ";"
           $output = Resolve-Path "Scripts"
 
