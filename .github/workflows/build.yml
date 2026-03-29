@@ -21,11 +21,15 @@ jobs:
       - name: Compile Papyrus Scripts
         shell: powershell
         run: |
-          $flagsFile = Resolve-Path "Source/Scripts/Stubs/TESV_Papyrus_Flags.flg"
+          $flagsFile = Resolve-Path "Source/Scripts/Stubs/BaseGame/TESV_Papyrus_Flags.flg"
           $imports = @(
             (Resolve-Path "Source/Scripts"),
             (Resolve-Path "Source/Scripts/SkyUI_SDK"),
-            (Resolve-Path "Source/Scripts/Stubs")
+            (Resolve-Path "Source/Scripts/Stubs/BaseGame"),
+            (Resolve-Path "Source/Scripts/Stubs/SKSE"),
+            (Resolve-Path "Source/Scripts/Stubs/JContainers"),
+            (Resolve-Path "Source/Scripts/Stubs/PapyrusUtil"),
+            (Resolve-Path "Source/Scripts/Stubs/ConsoleUtil")
           ) -join ";"
           $output = Resolve-Path "Scripts"
 
