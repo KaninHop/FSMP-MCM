@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
-<!-- CI-only project file. Uses relative paths to ci_dependencies and in-repo Stubs. -->
+<!-- CI-only project file. All dependencies are in-repo. -->
 <PapyrusProject xmlns="PapyrusProject.xsd" 
-    Flags="Source/Scripts/Stubs/TESV_Papyrus_Flags.flg" 
+    Flags="Source/Scripts/Stubs/BaseGame/TESV_Papyrus_Flags.flg" 
     Game="sse"
     Anonymize="true" 
     Output="Scripts" 
@@ -16,7 +16,11 @@
     <Imports>
         <Import>./Source/Scripts</Import>
         <Import>./Source/Scripts/SkyUI_SDK</Import>
-        <Import>./Source/Scripts/Stubs</Import>
+        <Import>./Source/Scripts/Stubs/BaseGame</Import>
+        <Import>./Source/Scripts/Stubs/SKSE</Import>
+        <Import>./Source/Scripts/Stubs/JContainers</Import>
+        <Import>./Source/Scripts/Stubs/PapyrusUtil</Import>
+        <Import>./Source/Scripts/Stubs/ConsoleUtil</Import>
     </Imports>
     <Folders>
         <Folder>./Source/Scripts</Folder>
