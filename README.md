@@ -19,24 +19,49 @@ Key features broken down by menu pages:
 - **Wind Parameters:** Enable and manipulate FSMP-native wind by setting wind strength scales and establishing distance cutoffs for wind calculation.
 - **Logging & Presets:** Quickly adjust the hdtSMP64 log level (Fatal to Debug) or swap between saved XML presets in-game.
 
-## Prerequisites
+## Development & Building
 
-To build the Papyrus scripts from source, you will need:
-- [Skyrim Script Extender (SKSE64)](http://skse.silverlock.org/) Scripts/Source
-- [SkyUI SDK](https://github.com/schlangster/skyui/wiki/Downloads)
-- Papyrus dependencies (adjust your paths in `skyrimse.ppj` accordingly):
-  - PapyrusUtil
-  - ConsoleUtilSSE
-  - JContainers
-- A suitable Papyrus compiler tool (like Caprica or the official Creation Kit compiler).
+Local builds have been simplified to match the CI environment. All necessary Papyrus dependencies are provided as "stubs" within the repository, so you don't need to install external mods to compile the source.
 
-## Build Instructions
+### Prerequisites
 
-This project uses the `skyrimse.ppj` file for its build configuration. 
-1. Open `skyrimse.ppj`.
-2. Update the `<Imports>` paths to point to the correct locations of your mod dependencies on your system.
-3. Update the `<PostBuildEvent>` sections if you wish to deploy automatically to your mod manager folders.
-4. Compile the project using your preferred Papyrus compiler that reads `.ppj` files.
+1.  **Caprica Compiler**: This project uses the [Caprica](https://github.com/Orvid/Caprica) compiler for fast, strict Papyrus compilation.
+    *   Download `Caprica.exe` from the [latest releases](https://github.com/Orvid/Caprica/releases).
+    *   Place `Caprica.exe` into the `Caprica/` folder in the root of this repository.
+2.  **PowerShell**: Required to run the build script.
+
+### Build Instructions
+
+The build process supports two modes:
+
+*   **Release Mode** (Default): Uses in-repo stubs. Requires no setup other than having Caprica.
+*   **Dev Mode**: Uses your real local Skyrim script sources. Ideal for development when you need full script visibility.
+
+#### Using the Compilation Script
+
+1.  Open a PowerShell terminal in the repository root.
+2.  Run the desired mode:
+    ```powershell
+    # Release mode (default)
+    ./scripts/compile.ps1 -Mode Release
+
+    # Dev mode (uses local paths)
+    ./scripts/compile.ps1 -Mode Dev
+    ```
+
+The compiled `.pex` files will be placed in the `Scripts/` directory.
+
+#### Using Papyrus Project (.ppj) Files
+
+Two project files are provided:
+*   **`skyrimse.ppj`**: Portable Release version (stubs).
+*   **`skyrimse.dev.ppj`**: Local Development version. **Edit this file** to point to your machine-specific Skyrim and mod source paths. (This file is ignored by Git).
+
+You can run Caprica directly against them:
+```powershell
+./Caprica/Caprica.exe skyrimse.ppj
+./Caprica/Caprica.exe skyrimse.dev.ppj
+```
 
 ## License
 

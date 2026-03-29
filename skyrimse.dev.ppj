@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<!-- Local Development Project File - Add your machine-specific paths here -->
+<PapyrusProject xmlns="PapyrusProject.xsd" 
+    Flags="F:\SteamLibrary\steamapps\common\Skyrim Special Edition\Data\Source\Scripts\TESV_Papyrus_Flags.flg" 
+    Game="sse"
+    Anonymize="true" 
+    Output="Scripts" 
+    Optimize="false" 
+    Release="false" 
+    Zip="false"
+    Package="false"
+    Final="false">
+    <Variables>
+        <Variable Name="ModName" Value="FSMP MCM" />
+    </Variables>
+    <Imports>
+        <Import>./Source/Scripts</Import>
+        <Import>F:\Vortex Mods\skyrimse\Skyrim Script Extender (SKSE64)-30379-2-2-6-1705522967\Data\Scripts\Source</Import>
+        <Import>F:\SteamLibrary\steamapps\common\Skyrim Special Edition\Data\Source\Scripts</Import>
+        <Import>E:\dev\Smp Benchmark Mod\SkyUI\skyui-master\dist\Data\Scripts\Source</Import>
+        <Import>F:\Vortex Mods\skyrimse\PapyrusUtil AE SE - Scripting Utility Functions-13048-4-6-1705639805\Source\Scripts</Import>
+        <Import>F:\Vortex Mods\skyrimse\ConsoleUtilSSE NG-76649-1-5-1-1704108553\Scripts\Source</Import>
+        <Import>F:\Vortex Mods\skyrimse\JContainers SE-16495-4-2-9-1705929247\scripts\source</Import>
+    </Imports>
+    <Folders>
+        <Folder>./Source/Scripts</Folder>
+    </Folders>
+    <!-- Machine-specific deployment events -->
+    <PostBuildEvent Description="Deploy to local dev instances" UseInBuild="true">
+        <Command>xcopy "Scripts" "C:\Games\Nolvus\Instances\Nolvus Natural Lighting\MODS\mods\FSMPM - The FSMP MCM Dev\Scripts\" /E/Y</Command>
+        <Command>xcopy "SKSE" "C:\Games\Nolvus\Instances\Nolvus Natural Lighting\MODS\mods\FSMPM - The FSMP MCM Dev\SKSE\" /E/Y</Command>
+        <Command>xcopy "Source" "C:\Games\Nolvus\Instances\Nolvus Natural Lighting\MODS\mods\FSMPM - The FSMP MCM Dev\Source\" /E/Y</Command>
+
+        <Command>xcopy "Scripts" "C:\Games\Faster HDT-SMP\FSMPM - The FSMP MCM\Scripts\" /E/Y</Command>
+        <Command>xcopy "SKSE" "C:\Games\Faster HDT-SMP\FSMPM - The FSMP MCM\SKSE\" /E/Y</Command>
+        <Command>xcopy "Source" "C:\Games\Faster HDT-SMP\FSMPM - The FSMP MCM\Source\" /E/Y</Command>
+    </PostBuildEvent>
+</PapyrusProject>
