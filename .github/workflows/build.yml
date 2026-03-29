@@ -16,7 +16,7 @@ jobs:
 
       - name: Setup CI Dependencies
         shell: powershell
-        run: ./scripts/setup_ci.ps1
+        run: ./dev-scripts/setup_ci.ps1
 
       - name: Compile Papyrus Scripts
         shell: powershell

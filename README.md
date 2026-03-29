@@ -25,9 +25,9 @@ Local builds have been simplified to match the CI environment. All necessary Pap
 
 ### Prerequisites
 
-1.  **Caprica Compiler**: This project uses the [Caprica](https://github.com/Orvid/Caprica) compiler for fast, strict Papyrus compilation.
-    *   Download `Caprica.exe` from the [latest releases](https://github.com/Orvid/Caprica/releases).
-    *   Place `Caprica.exe` into the `Caprica/` folder in the root of this repository.
+1.  **Caprica Compiler**: This project uses the [Caprica](https://github.com/KrisV-777/Caprica) compiler for fast, strict Papyrus compilation.
+    *   **Auto-Download**: The build script (`./dev-scripts/compile.ps1`) will automatically attempt to download and install `Caprica.exe` to the `Caprica/` folder if it is missing.
+    *   **Manual Install**: If the auto-download fails, you can download it manually from the [KrisV-777/Caprica Releases](https://github.com/KrisV-777/Caprica/releases) and place it in the `Caprica/` directory.
 2.  **PowerShell**: Required to run the build script.
 
 ### Build Instructions
@@ -43,10 +43,10 @@ The build process supports two modes:
 2.  Run the desired mode:
     ```powershell
     # Release mode (default)
-    ./scripts/compile.ps1 -Mode Release
+    ./dev-scripts/compile.ps1 -Mode Release
 
-    # Dev mode (uses local paths)
-    ./scripts/compile.ps1 -Mode Dev
+    # Dev mode (uses generic local paths by default)
+    ./dev-scripts/compile.ps1 -Mode Dev
     ```
 
 The compiled `.pex` files will be placed in the `Scripts/` directory.
@@ -55,7 +55,7 @@ The compiled `.pex` files will be placed in the `Scripts/` directory.
 
 Two project files are provided:
 *   **`skyrimse.ppj`**: Portable Release version (stubs).
-*   **`skyrimse.dev.ppj`**: Local Development version. **Edit this file** to point to your machine-specific Skyrim and mod source paths. (This file is ignored by Git).
+*   **`skyrimse.dev.ppj`**: Local Development version. **Edit this file** to point to your machine-specific Skyrim and mod source paths. It contains generic placeholders to get you started. (This file is ignored by Git).
 
 You can run Caprica directly against them:
 ```powershell

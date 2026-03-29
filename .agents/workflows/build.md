@@ -18,7 +18,11 @@ Compiles the Papyrus source scripts (`.psc`) into compiled Papyrus executables (
 1. Run the compilation script from the repository root:
 
 ```powershell
-./scripts/compile.ps1
+# Default Release mode (uses stubs)
+./dev-scripts/compile.ps1
+
+# Dev mode (uses your real local scripts)
+./dev-scripts/compile.ps1 -Mode Dev
 ```
 
 The compiled `.pex` files will be placed in the `Scripts/` directory.
